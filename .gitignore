@@ -1,0 +1,20 @@
+shva-client/.vite/
+# I do not ignore environment variables so that they are available after cloning the project from GitHub
+#**/.env.*
+cheatsheet
+# global ignore client & server
+**/node_modules/
+# Build and temporary files (for client and server)
+**/dist/
+**/build/
+# log files
+**/logs
+**/*.log
+# WebStorm / JetBrains / vccode
+**/.idea/
+**/*.iml
+.idea/
+*.iml
+**/.vscode/
+# Local configurations
+**/*.local
