@@ -1,11 +1,13 @@
 import js from '@eslint/js'
-import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
+import eslintGlobalRules from '../sharable/eslint-global-rules.js'
+
 export default tseslint.config(
-  { ignores: ['dist', '.idea', '.vscode', 'build'], },
+  { ignores: ['dist', '.idea', '.vscode', 'build'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],
@@ -19,10 +21,8 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      ...eslintGlobalRules,
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },
 )

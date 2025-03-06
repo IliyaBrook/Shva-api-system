@@ -1,0 +1,30 @@
+{
+  "name": "shiva-api-system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Iliya Brook <iliyabrook1987@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "yarn build:server && yarn build:client",
+    "build:server": "yarn --cwd shva-server build",
+    "build:client": "yarn --cwd shva-client build",
+    "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
+    "dev:server": "yarn --cwd shva-server dev",
+    "dev:client": "yarn --cwd shva-client dev",
+    "lint": "yarn lint:server && yarn lint:client",
+    "lint:server": "yarn --cwd shva-server lint",
+    "lint:client": "yarn --cwd shva-client lint",
+    "format": "yarn format:server && yarn format:client",
+    "format:server": "yarn --cwd shva-server format",
+    "format:client": "yarn --cwd shva-client format"
+  },
+  "workspaces": [
+    "packages/*",
+    "shva-client",
+    "shva-server"
+  ],
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

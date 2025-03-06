@@ -1,0 +1,16 @@
+{
+  "name": "@shiva-api-system/prettierrc-config",
+  "version": "1.0.0",
+  "type": "module",
+  "main": ".prettierrc.js",
+  "author": "Iliya Brook <iliyabrook1987@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "exports": {
+    ".": "./.prettierrc.js"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "prettier": "^3.5.3"
+  }
+}
