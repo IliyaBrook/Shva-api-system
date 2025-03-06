@@ -4,6 +4,7 @@ const eslintGlobalRules = {
   'eqeqeq': ['error', 'always'],
   'no-unused-vars': 'warn',
   '@typescript-eslint/no-unused-vars': ['warn'],
+  '@typescript-eslint/no-explicit-any': 'off',
   '@typescript-eslint/explicit-function-return-type': ['warn', { allowExpressions: true }],
   'consistent-return': 'error',
   'no-async-promise-executor': 'error',

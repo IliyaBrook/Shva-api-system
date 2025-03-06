@@ -14,7 +14,7 @@ export default tseslint.config(
       globals: globals.node,
     },
     rules: {
-      ...eslintGlobalRules,
+      ...eslintGlobalRules
     },
   },
 )

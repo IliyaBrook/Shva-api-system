@@ -6,7 +6,7 @@ import { validationResult } from 'express-validator';
 const days30InSec = 30 * 24 * 60 * 60 * 1000;
 
 class UserController {
-  async registration(req: Request, res: Response, next: NextFunction) {
+  async registration(req: Request, res: Response, next: NextFunction):Promise<void | Response<Response, Record<string, any>>> {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
