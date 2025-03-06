@@ -1,8 +1,8 @@
 /**
  * @see https://prettier.io/docs/configuration
- * @type {import("prettier").Config}
+ * @type {import("prettier").Config, import("@trivago/prettier-plugin-sort-imports").PluginConfig}
  */
-const config = {
+const config= {
   semi: false,
   singleQuote: true,
   trailingComma: 'all',
@@ -10,7 +10,7 @@ const config = {
   tabWidth: 2,
   useTabs: false,
   plugins: ['@trivago/prettier-plugin-sort-imports'],
-  importOrder: [
+  importOrder:[
     '<THIRD_PARTY_MODULES>',
     '^@/components/(.*)$',
     '^@/hooks/(.*)$',
