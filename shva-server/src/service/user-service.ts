@@ -1,8 +1,8 @@
+import UserDto from '@/dtos/user-dto'
+import ApiError from '@/exceptions/api-error'
 import type { IUser } from '@/types/user'
 import bcrypt from 'bcrypt'
 
-import UserDto from '../dtos/user-dto'
-import ApiError from '../exceptions/api-error'
 
 import tokenService from './token-service'
 import { User } from '@/models/user-model'

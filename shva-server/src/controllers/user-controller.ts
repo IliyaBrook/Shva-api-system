@@ -6,7 +6,7 @@ import { validationResult } from 'express-validator';
 const days30InSec = 30 * 24 * 60 * 60 * 1000;
 
 class UserController {
-  async registration(req: Request, res: Response, next: NextFunction):Promise<void | Response<Response, Record<string, any>>> {
+  async registration(req: Request, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -15,8 +15,8 @@ class UserController {
       const { email, password } = req.body;
       const userData = await userService.registration(email, password);
       res.cookie('refreshToken', userData.refreshToken, { maxAge: days30InSec, httpOnly: true });
-      return res.json(userData);
-    } catch (e) {
+      res.json(userData);
+    } catch (e: unknown) {
       next(e);
     }
   }
@@ -25,7 +25,7 @@ class UserController {
       const { email, password } = req.body;
       const userData = await userService.login(email, password);
       res.cookie('refreshToken', userData.refreshToken, { maxAge: days30InSec, httpOnly: true });
-      return res.json(userData);
+      res.json(userData);
     } catch (e) {
       next(e);
     }
@@ -35,7 +35,7 @@ class UserController {
       const { refreshToken } = req.cookies;
       const token = await userService.logout(refreshToken);
       res.clearCookie('refreshToken');
-      return res.json(token);
+      res.json(token);
     } catch (e) {
       next(e);
     }
@@ -46,15 +46,15 @@ class UserController {
       const { refreshToken } = req.cookies;
       const userData = await userService.refresh(refreshToken);
       res.cookie('refreshToken', userData.refreshToken, { maxAge: days30InSec, httpOnly: true });
-      return res.json(userData);
+      res.json(userData);
     } catch (e) {
       next(e);
     }
   }
-  async getUsers(req: Request, res: Response, next: NextFunction) {
+  async getUsers(_req: Request, res: Response, next: NextFunction) {
     try {
       const users = await userService.getAllUsers();
-      return res.json(users);
+      res.json(users);
     } catch (e) {
       next(e);
     }

@@ -1,5 +1,5 @@
+import { sequelize } from '@/database/db'
 import { DataTypes, Model, Optional } from 'sequelize';
-import { sequelize } from '../database/db';
 
 interface ITokenAttributes {
   id: number;

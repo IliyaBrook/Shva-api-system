@@ -1,7 +1,12 @@
 import ApiError from '@/exceptions/api-error'
 import { Request, Response, NextFunction } from 'express';
 
-export default function errorMiddleware(err: unknown, req: Request, res: Response, next: NextFunction):void {
+export default function errorMiddleware(
+  err: unknown,
+  _req: Request,
+  res: Response,
+  _next: NextFunction
+) {
   if (err instanceof ApiError) {
     res.status(err.status).json({ message: err.message, errors: err.errors });
     return

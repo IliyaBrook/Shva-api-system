@@ -2,7 +2,7 @@ import ApiError from '@/exceptions/api-error'
 import tokenService from '@/service/token-service'
 import { Request, Response, NextFunction } from 'express';
 
-export default function authMiddleware(req: Request, res: Response, next: NextFunction): void {
+export default function authMiddleware(req: Request, _res: Response, next: NextFunction){
   try {
     const authorizationHeader = req.headers.authorization;
     if (!authorizationHeader) {
