@@ -1,5 +1,7 @@
+import UserDto from '@/dtos/user-dto'
 import ApiError from '@/exceptions/api-error'
 import userService from '@/service/user-service'
+import type { IUserWithPass } from '@/types/user'
 import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 
@@ -8,12 +10,18 @@ const days30InSec = 30 * 24 * 60 * 60 * 1000;
 class UserController {
   async registration(req: Request, res: Response, next: NextFunction) {
     try {
+      const body = req.body as IUserWithPass
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return next(ApiError.BadRequest('Validation error', errors.array()));
       }
-      const { email, password } = req.body;
-      const userData = await userService.registration(email, password);
+      const { email, password, firstname, lastname } = body;
+      const userData = await userService.registration({
+        email,
+        firstname,
+        lastname,
+        password
+      });
       res.cookie('refreshToken', userData.refreshToken, { maxAge: days30InSec, httpOnly: true });
       res.json(userData);
     } catch (e: unknown) {
@@ -30,6 +38,7 @@ class UserController {
       next(e);
     }
   }
+  
   async logout(req: Request, res: Response, next: NextFunction) {
     try {
       const { refreshToken } = req.cookies;
@@ -40,7 +49,7 @@ class UserController {
       next(e);
     }
   }
-
+  
   async refresh(req: Request, res: Response, next: NextFunction) {
     try {
       const { refreshToken } = req.cookies;
@@ -54,7 +63,12 @@ class UserController {
   async getUsers(_req: Request, res: Response, next: NextFunction) {
     try {
       const users = await userService.getAllUsers();
-      res.json(users);
+      if (users.length > 0) {
+        const usersData = users.map(user => new UserDto(user));
+        res.json(usersData);
+      }else {
+        res.json([]);
+      }
     } catch (e) {
       next(e);
     }

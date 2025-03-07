@@ -9,7 +9,10 @@ export default function errorMiddleware(
 ) {
   if (err instanceof ApiError) {
     res.status(err.status).json({ message: err.message, errors: err.errors });
-    return
+    return;
   }
-  res.status(500).json({ message: 'Unknown error' });
+  const message = process.env.NODE_ENV === 'development'
+    ? (err instanceof Error ? err.message : String(err))
+    : 'Unknown error';
+  res.status(500).json({ message });
 }

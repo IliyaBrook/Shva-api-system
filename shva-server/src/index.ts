@@ -15,16 +15,15 @@ app.use(cors());
 app.use('/api', router);
 app.use(errorMiddleware);
 
-
 const start = async (): Promise<void> => {
   try {
     await sequelize.authenticate();
     console.log('Database connected.');
-    await sequelize.sync();
+    await sequelize.sync({ alter: true });
     app.listen(PORT, () => console.log(`Server running at PORT = ${PORT}`));
   } catch (e) {
     console.log(e);
   }
 };
 
-start();
+void start();

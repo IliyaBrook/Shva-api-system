@@ -1,6 +1,7 @@
 import ApiError from '@/exceptions/api-error'
 import tokenService from '@/service/token-service'
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
+import { Request } from '@/types/express';
 
 export default function authMiddleware(req: Request, _res: Response, next: NextFunction){
   try {

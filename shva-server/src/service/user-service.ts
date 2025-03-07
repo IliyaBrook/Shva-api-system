@@ -1,14 +1,14 @@
 import UserDto from '@/dtos/user-dto'
 import ApiError from '@/exceptions/api-error'
-import type { IUser } from '@/types/user'
+import { User } from '@/models/user-model'
+import type { IUserModel, IUserWithPass } from '@/types/user'
 import bcrypt from 'bcrypt'
 
 
 import tokenService from './token-service'
-import { User } from '@/models/user-model'
 
 class UserService {
-  async registration(email: string, password: string): Promise<{
+  async registration({email, password, lastname, firstname}: IUserWithPass): Promise<{
     user: UserDto,
     accessToken: string,
     refreshToken: string
@@ -18,7 +18,7 @@ class UserService {
       throw ApiError.BadRequest(`User with email ${email} already exists`)
     }
     const hashPassword = await bcrypt.hash(password, 3)
-    const user = await User.create({ email, password: hashPassword })
+    const user = await User.create({ email, password: hashPassword, lastname, firstname })
     const userDto = new UserDto(user)
     const tokens = tokenService.generateTokens({ ...userDto })
     await tokenService.saveToken(userDto.id, tokens.refreshToken)
@@ -51,15 +51,17 @@ class UserService {
   }
   
   async refresh(refreshToken: string): Promise<{ user: UserDto, accessToken: string, refreshToken: string }> {
+    
     if (!refreshToken) {
       throw ApiError.UnauthorizedError()
     }
     const userData = tokenService.validateRefreshToken(refreshToken)
+    
     const tokenFromDb = await tokenService.findToken(refreshToken)
     if (!userData || !tokenFromDb) {
       throw ApiError.UnauthorizedError()
     }
-    const user = await User.findByPk((userData as IUser).id) as User
+    const user = await User.findByPk((userData as IUserModel).id) as User
     const userDto = new UserDto(user)
     const tokens = tokenService.generateTokens({ ...userDto })
     await tokenService.saveToken(userDto.id, tokens.refreshToken)

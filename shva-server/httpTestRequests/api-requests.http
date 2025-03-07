@@ -1,0 +1,47 @@
+### REGISTRATION
+//@no-log
+POST {{api}}/register
+Content-Type: application/json
+
+{
+	"email": "{{email}}",
+	"firstname": "{{firstname}}",
+	"lastname": "{{lastname}}",
+    "password" : "{{password}}"
+}
+
+> {% client.global.set("accessToken", response.body.accessToken); %}
+
+### LOGIN
+//@no-log
+POST {{api}}/login
+Content-Type: application/json
+
+{
+	"email": "{{email}}",
+    "password" : "{{password}}"
+}
+
+> {% client.global.set("accessToken", response.body.accessToken); %}
+
+### GET ALL USERS
+//@no-log
+GET {{api}}/users
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+### REFRESH If the access token is expired or does not exist, make a request to api/refresh to obtain a new access token using the refresh token.
+//@no-log
+GET {{api}}/refresh
+Content-Type: application/json
+
+> {%
+  client.global.set("accessToken", response.body.accessToken);
+%}
+
+### LOGOUT
+//@no-log
+POST {{api}}/logout
+Content-Type: application/json
+
+> {% client.global.clearAll(); %}
