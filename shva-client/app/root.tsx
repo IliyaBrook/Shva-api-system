@@ -3,7 +3,7 @@
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import type { IAuthResponse, IUserResponse, IUsersResponse, IGlobalContext } from '@/types'
 import { apiUrl } from '@/utils'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Outlet } from 'react-router'
 import './index.css'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -13,6 +13,7 @@ import { globalContext } from '@/contexts/globalContext'
 export { Layout }
 
 export default function App() {
+  const checkAuthAndGetTries = useRef(0)
   const [isAuthorized, setIsAuthorized] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
@@ -31,8 +32,13 @@ export default function App() {
   )
   
   useEffect(() => {
-    const token = localStorage.getItem('accessToken')
-    const checkAuth = async () => {
+    const checkAuthAndGetData = async () => {
+      const token = localStorage.getItem('accessToken')
+      checkAuthAndGetTries.current++
+      if (checkAuthAndGetTries.current > 5) {
+        localStorage.removeItem('accessToken')
+        return
+      }
       if (token) {
         try {
           const res = await fetch(
@@ -42,7 +48,6 @@ export default function App() {
               credentials: 'include',
             },
           )
-          
           if (res.ok) {
             const usersData: IUsersResponse = await res.json()
             if (Array.isArray(usersData)) {
@@ -50,6 +55,7 @@ export default function App() {
             } else {
               setGlobalState({ isAuthorized: true })
             }
+            return
           } else if (res.status === 401) {
             try {
               const refreshRes = await fetch(
@@ -60,7 +66,8 @@ export default function App() {
                 const refreshData: IAuthResponse = await refreshRes.json()
                 if ('accessToken' in refreshData) {
                   localStorage.setItem('accessToken', refreshData.accessToken)
-                  void checkAuth()
+                  await checkAuthAndGetData()
+                  setGlobalState({ isAuthorized: true })
                 } else {
                   localStorage.removeItem('accessToken')
                   setGlobalState({ isAuthorized: false })
@@ -87,8 +94,8 @@ export default function App() {
       }
     }
     
-    void checkAuth()
-  }, [setGlobalState])
+    void checkAuthAndGetData()
+  }, [])
   
   useEffect(() => {
     const allowedPaths = ['/', '/register']
@@ -103,7 +110,7 @@ export default function App() {
     () => ({ isAuthorized, setIsAuthorized, users, setGlobalState }),
     [isAuthorized, setIsAuthorized, users, setGlobalState],
   )
-  
+
   return (
     <globalContext.Provider value={contextValue}>
       <Outlet />
