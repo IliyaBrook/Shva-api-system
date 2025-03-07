@@ -1,3 +1,6 @@
+/**
+ * @type {import("eslint").Linter.RulesRecord}
+ */
 const eslintGlobalRules = {
   'prefer-const': 'error',
   'no-var': 'error',

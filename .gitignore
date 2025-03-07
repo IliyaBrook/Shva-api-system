@@ -18,3 +18,5 @@ cheatsheet
 **/.vscode/
 # Local configurations
 **/*.local
+#client ignore
+shva-client/.react-router

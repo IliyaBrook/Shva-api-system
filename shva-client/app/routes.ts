@@ -4,6 +4,7 @@ import {
   index,
 } from "@react-router/dev/routes";
 
+// noinspection JSUnusedGlobalSymbols
 export default [
   index("./pages/login.tsx"),
   route("/register", "./pages/register.tsx"),

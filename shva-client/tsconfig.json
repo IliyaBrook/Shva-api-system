@@ -15,12 +15,16 @@
     "rootDirs": [".", "./.react-router/types"],
     "baseUrl": ".",
     "paths": {
-      "@/app": ["./app/*"],
       "@/utils/*": ["app/utils/*"],
       "@/hooks/*": ["app/hooks/*"],
       "@/types/*": ["app/types/*"],
+      "@/types/Router": [".react-router/types/app/+types/root"],
       "@/pages/*": ["app/pages/*"],
-      "@/components/*": ["app/components/*"]
+      "@/contexts/*": ["app/contexts/*"],
+      "@/components/*": ["app/components/*"],
+      "@/*": [
+        "app/*"
+      ]
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
