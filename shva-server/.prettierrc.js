@@ -1,3 +1,3 @@
-import prettierConfig from '@shiva-api-system/prettierrc-config'
+import prettierConfig from 'configs/prettier-global.config'
 
 export default prettierConfig

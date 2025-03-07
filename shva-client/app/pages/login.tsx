@@ -1,11 +1,12 @@
 import type { IAuthResponse } from '@/types'
+import { apiUrl } from '@/utils'
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import { globalContext } from '@/contexts/globalContext'
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('johnsilver@gmail.com');
+  const [password, setPassword] = useState('123456');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { setIsAuthorized } = useContext(globalContext);
@@ -16,7 +17,7 @@ const Login = () => {
     
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL + '/login',
+        apiUrl + '/login',
         {
           method: 'POST',
           headers: {

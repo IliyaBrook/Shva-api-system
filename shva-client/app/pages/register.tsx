@@ -1,3 +1,4 @@
+import { apiUrl } from '@/utils'
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import { globalContext } from '@/contexts/globalContext'
@@ -18,7 +19,7 @@ const Register = () => {
     setError('');
     
     try {
-      const response = await fetch(process.env.REACT_APP_API_URL + '/register', {
+      const response = await fetch(apiUrl + '/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

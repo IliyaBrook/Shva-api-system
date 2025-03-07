@@ -2,7 +2,7 @@ import js from '@eslint/js'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
-import eslintGlobalRules from '../configs/eslint-global-rules.js'
+import eslintGlobalRules from 'configs/eslint-global-rules.js'
 
 export default tseslint.config(
   { ignores: ['dist', '.idea', '.vscode', 'build'] },

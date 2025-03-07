@@ -20,7 +20,6 @@
     "format:client": "yarn --cwd shva-client format"
   },
   "workspaces": [
-    "packages/*",
     "shva-client",
     "shva-server"
   ],

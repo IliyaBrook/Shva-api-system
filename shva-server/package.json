@@ -20,7 +20,8 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "@shiva-api-system/prettierrc-config": "1.0.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "prettier": "^3.5.3",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
