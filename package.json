@@ -6,6 +6,9 @@
   "license": "MIT",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22.0.0 <23.0.0"
+  },
   "scripts": {
     "build": "yarn build:server && yarn build:client",
     "build:server": "yarn --cwd shva-server build",
