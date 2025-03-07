@@ -7,10 +7,9 @@ interface ITokenAttributes {
   refreshToken: string;
 }
 
-interface ITokenCreationAttributes extends Optional<ITokenAttributes, "id"> {}
 
 export class Token
-  extends Model<ITokenAttributes, ITokenCreationAttributes>
+  extends Model<ITokenAttributes, Optional<ITokenAttributes, "id">>
   implements ITokenAttributes
 {
   public id!: number;

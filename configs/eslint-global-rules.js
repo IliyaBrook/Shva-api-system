@@ -5,11 +5,17 @@ const eslintGlobalRules = {
   'prefer-const': 'error',
   'no-var': 'error',
   'eqeqeq': ['error', 'always'],
-  'no-unused-vars': 'warn',
-  '@typescript-eslint/no-unused-vars': ['warn'],
+  "@typescript-eslint/no-unused-vars": [
+    "warn", {
+      "ignoreRestSiblings": true,
+      "argsIgnorePattern": "^_",
+      "varsIgnorePattern": "^_",
+      "caughtErrorsIgnorePattern": "^_"
+    }
+  ],
   '@typescript-eslint/no-explicit-any': 'off',
   '@typescript-eslint/explicit-function-return-type': ['warn', { allowExpressions: true }],
-  'consistent-return': 'error',
+  'consistent-return': 'off',
   'no-async-promise-executor': 'error',
   'curly': 'error'
 }

@@ -3,7 +3,7 @@ import React from "react";
 import { isRouteErrorResponse } from "react-router";
 import { useNavigate } from "react-router-dom";
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+export const ErrorBoundary = ({ error }: Route.ErrorBoundaryProps) => {
   const navigate = useNavigate();
   let message = "Oops!";
   let details = "An unexpected error occurred.";
@@ -39,4 +39,4 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       </div>
     </main>
   );
-}
+};

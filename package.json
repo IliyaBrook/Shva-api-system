@@ -5,6 +5,7 @@
   "author": "Iliya Brook <iliyabrook1987@gmail.com>",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "yarn build:server && yarn build:client",
     "build:server": "yarn --cwd shva-server build",

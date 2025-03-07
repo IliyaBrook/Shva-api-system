@@ -1,7 +1,11 @@
 import React from "react";
 import { Links, Meta, Scripts, ScrollRestoration } from "react-router";
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export const Layout = ({
+  children,
+}: {
+  children: React.ReactNode;
+}): React.JSX.Element => {
   return (
     <html lang="en">
       <head>
@@ -18,4 +22,4 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </body>
     </html>
   );
-}
+};

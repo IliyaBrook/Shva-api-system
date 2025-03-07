@@ -8,7 +8,7 @@ import { validationResult } from "express-validator";
 const days30InSec = 30 * 24 * 60 * 60 * 1000;
 
 class UserController {
-  async registration(req: Request, res: Response, next: NextFunction) {
+  async registration(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const body = req.body as IUserWithPass;
       const errors = validationResult(req);
@@ -32,7 +32,7 @@ class UserController {
     }
   }
 
-  async login(req: Request, res: Response, next: NextFunction) {
+  async login(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { email, password } = req.body;
       const userData = await userService.login(email, password);
@@ -46,7 +46,7 @@ class UserController {
     }
   }
 
-  async logout(req: Request, res: Response, next: NextFunction) {
+  async logout(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { refreshToken } = req.cookies;
       const token = await userService.logout(refreshToken);
@@ -57,7 +57,7 @@ class UserController {
     }
   }
 
-  async refresh(req: Request, res: Response, next: NextFunction) {
+  async refresh(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { refreshToken } = req.cookies;
       const userData = await userService.refresh(refreshToken);
@@ -71,7 +71,7 @@ class UserController {
     }
   }
 
-  async getUsers(_req: Request, res: Response, next: NextFunction) {
+  async getUsers(_req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const users = await userService.getAllUsers();
       if (users.length > 0) {

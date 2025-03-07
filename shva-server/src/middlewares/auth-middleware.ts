@@ -7,7 +7,7 @@ export default function authMiddleware(
   req: Request,
   _res: Response,
   next: NextFunction,
-) {
+): void {
   try {
     const authorizationHeader = req.headers.authorization;
     if (!authorizationHeader) {
@@ -29,7 +29,7 @@ export default function authMiddleware(
 
     req.user = userData;
     next();
-  } catch (e) {
+  } catch {
     next(ApiError.UnauthorizedError());
   }
 }

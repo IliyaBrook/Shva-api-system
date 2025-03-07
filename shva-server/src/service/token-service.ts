@@ -3,7 +3,10 @@ import type { IUser } from "@/types/user";
 import jwt from "jsonwebtoken";
 
 class TokenService {
-  generateTokens(payload: IUser) {
+  generateTokens(payload: IUser): {
+    accessToken: string;
+    refreshToken: string;
+  } {
     const accessToken = jwt.sign(
       payload,
       process.env.JWT_ACCESS_SECRET as string,
@@ -47,7 +50,7 @@ class TokenService {
       return null;
     }
   }
-  async saveToken(userId: number, refreshToken: string) {
+  async saveToken(userId: number, refreshToken: string): Promise<Token> {
     const tokenData = await Token.findOne({ where: { user: userId } });
     if (tokenData) {
       tokenData.refreshToken = refreshToken;
@@ -55,10 +58,10 @@ class TokenService {
     }
     return await Token.create({ user: userId, refreshToken });
   }
-  async removeToken(refreshToken: string) {
+  async removeToken(refreshToken: string): Promise<number> {
     return await Token.destroy({ where: { refreshToken } });
   }
-  async findToken(refreshToken: string) {
+  async findToken(refreshToken: string): Promise<Token | null> {
     return await Token.findOne({ where: { refreshToken } });
   }
 }
