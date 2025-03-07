@@ -1,35 +1,33 @@
 {
-	"compilerOptions": {
-		"target": "es6",
-		"module": "commonjs",
-		"lib": ["es6"],
-		"outDir": "dist",
-		"rootDir": "src",
-		"strict": true,
-		"moduleResolution": "node",
-		"esModuleInterop": true,
-		"resolveJsonModule": true,
-		"skipLibCheck": true,
-		"noImplicitAny": true,
-		"forceConsistentCasingInFileNames": true,
-		"sourceMap": true,
-		"typeRoots": ["./src/types"],
-		"paths": {
-			"@/*": [
-				"src/*",
-				"controllers/*",
-				"dtos/*",
-				"exceptions/*",
-				"middlewares/*",
-				"models/*",
-				"router/*",
-				"types/*",
-				"database/*",
-			]
-		}
-	},
-	"include": [
-		"src/**/*"
-	],
-	"exclude": ["node_modules"]
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["es6"],
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "typeRoots": ["./src/types"],
+    "paths": {
+      "@/*": [
+        "./src/*",
+        "./controllers/*",
+        "./dtos/*",
+        "./exceptions/*",
+        "./middlewares/*",
+        "./models/*",
+        "./router/*",
+        "./types/*",
+        "./database/*"
+      ]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

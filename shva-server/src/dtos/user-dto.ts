@@ -1,4 +1,4 @@
-import type { IUserModel } from '@/types/user'
+import type { IUserModel } from "@/types/user";
 
 export default class UserDto {
   email: string;

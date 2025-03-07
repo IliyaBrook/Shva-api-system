@@ -1,14 +1,14 @@
-import type { IUser } from './user.ts'
+import type { IUser } from "./user.ts";
 
 interface IErrorResponse {
   message: string;
-  errors: unknown[]
+  errors: unknown[];
 }
 
 interface IAuthSuccessResponse {
   accessToken: string;
   refreshToken: string;
-  users: IUser & {id : string}
+  users: IUser & { id: string };
 }
 
 export interface IUserResponse {

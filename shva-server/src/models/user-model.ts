@@ -1,15 +1,18 @@
-import { sequelize } from '@/database/db'
-import type { IUserModel } from '@/types/user'
-import { DataTypes, Model, Optional } from 'sequelize'
+import { sequelize } from "@/database/db";
+import type { IUserModel } from "@/types/user";
+import { DataTypes, Model, Optional } from "sequelize";
 
-type IUserCreationAttributes = Optional<IUserModel, 'id'>
+type IUserCreationAttributes = Optional<IUserModel, "id">;
 
-export class User extends Model<IUserModel, IUserCreationAttributes> implements IUserModel {
+export class User
+  extends Model<IUserModel, IUserCreationAttributes>
+  implements IUserModel
+{
   public id!: number;
   public email!: string;
   public password!: string;
-  public firstname!: string
-  public lastname!: string
+  public firstname!: string;
+  public lastname!: string;
 }
 
 User.init(
@@ -17,28 +20,28 @@ User.init(
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     email: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: false
+      allowNull: false,
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     firstname: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     lastname: {
       type: DataTypes.STRING,
-      allowNull: true
-    }
+      allowNull: true,
+    },
   },
   {
     sequelize,
-    tableName: 'users'
-  }
+    tableName: "users",
+  },
 );

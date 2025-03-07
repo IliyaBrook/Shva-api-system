@@ -1,46 +1,47 @@
-import { apiUrl } from '@/utils'
-import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
-import { globalContext } from '@/contexts/globalContext'
-import { type IAuthResponse } from '@/types'
+import { apiUrl } from "@/utils";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { globalContext } from "@/contexts/globalContext";
+import { type IAuthResponse } from "@/types";
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { setIsAuthorized } = useContext(globalContext);
-  
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    
+    setError("");
+
     try {
-      const response = await fetch(apiUrl + '/register', {
-        method: 'POST',
+      const response = await fetch(apiUrl + "/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password, firstname, lastname }),
       });
-      
+
       const data: IAuthResponse = await response.json();
-      
-      if ('accessToken' in data) {
-        localStorage.setItem('accessToken', data.accessToken);
-        setIsAuthorized(true)
-        navigate('/users');
+
+      if ("accessToken" in data) {
+        localStorage.setItem("accessToken", data.accessToken);
+        setIsAuthorized(true);
+        navigate("/users");
       } else {
-        setError((data as { message?: string }).message || 'Registration failed');
+        setError(
+          (data as { message?: string }).message || "Registration failed",
+        );
       }
     } catch (err) {
-      setError('An error occurred during registration.');
+      setError("An error occurred during registration.");
     }
   };
-  
+
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100 w-full">
       <form
@@ -125,7 +126,7 @@ const Register = () => {
           </button>
           <Link
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            to={ { pathname: '/' }}
+            to={{ pathname: "/" }}
           >
             Already have an account?
           </Link>
@@ -135,4 +136,5 @@ const Register = () => {
   );
 };
 
+// noinspection JSUnusedGlobalSymbols
 export default Register;

@@ -1,20 +1,31 @@
-import { Token } from '@/models/token-model'
-import type { IUser } from '@/types/user'
-import jwt from 'jsonwebtoken'
+import { Token } from "@/models/token-model";
+import type { IUser } from "@/types/user";
+import jwt from "jsonwebtoken";
 
 class TokenService {
   generateTokens(payload: IUser) {
-    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET as string, { expiresIn: '30m' });
-    const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET as string, { expiresIn: '30d' });
+    const accessToken = jwt.sign(
+      payload,
+      process.env.JWT_ACCESS_SECRET as string,
+      { expiresIn: "30m" },
+    );
+    const refreshToken = jwt.sign(
+      payload,
+      process.env.JWT_REFRESH_SECRET as string,
+      { expiresIn: "30d" },
+    );
     return {
       accessToken,
-      refreshToken
+      refreshToken,
     };
   }
   validateAccessToken(token: string): IUser | null {
     try {
-      const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET as string);
-      if (typeof decoded === 'string') {
+      const decoded = jwt.verify(
+        token,
+        process.env.JWT_ACCESS_SECRET as string,
+      );
+      if (typeof decoded === "string") {
         return null;
       }
       return decoded as IUser;
@@ -24,8 +35,11 @@ class TokenService {
   }
   validateRefreshToken(token: string): IUser | null {
     try {
-      const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET as string);
-      if (typeof decoded === 'string') {
+      const decoded = jwt.verify(
+        token,
+        process.env.JWT_REFRESH_SECRET as string,
+      );
+      if (typeof decoded === "string") {
         return null;
       }
       return decoded as IUser;
@@ -33,7 +47,7 @@ class TokenService {
       return null;
     }
   }
-  async saveToken(userId: number, refreshToken: string){
+  async saveToken(userId: number, refreshToken: string) {
     const tokenData = await Token.findOne({ where: { user: userId } });
     if (tokenData) {
       tokenData.refreshToken = refreshToken;

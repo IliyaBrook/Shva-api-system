@@ -1,14 +1,14 @@
-import type { Route } from '@/types/Router'
-import React from 'react'
-import { isRouteErrorResponse } from 'react-router'
-import { useNavigate } from 'react-router-dom'
+import type { Route } from "@/types/Router";
+import React from "react";
+import { isRouteErrorResponse } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   const navigate = useNavigate();
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
-  
+
   if (isRouteErrorResponse(error)) {
     message = error.status === 404 ? "404" : "Error";
     details =
@@ -19,7 +19,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     details = error.message;
     stack = error.stack;
   }
-  
+
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100 w-full">
       <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
@@ -31,7 +31,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
           </pre>
         )}
         <button
-          onClick={() => navigate('/')}
+          onClick={() => navigate("/")}
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           Go to Home Page

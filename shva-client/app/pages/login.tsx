@@ -1,48 +1,43 @@
-import type { IAuthResponse } from '@/types'
-import { apiUrl } from '@/utils'
-import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
-import { globalContext } from '@/contexts/globalContext'
+import type { IAuthResponse } from "@/types";
+import { apiUrl } from "@/utils";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { globalContext } from "@/contexts/globalContext";
 
 const Login = () => {
-  const [email, setEmail] = useState('johnsilver@gmail.com');
-  const [password, setPassword] = useState('123456');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { setIsAuthorized } = useContext(globalContext);
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    
+    setError("");
+
     try {
-      const response = await fetch(
-        apiUrl + '/login',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
-      
+      const response = await fetch(apiUrl + "/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
       const data: IAuthResponse = await response.json();
-      
-      if ('accessToken' in data) {
-        localStorage.setItem('accessToken', data.accessToken);
+
+      if ("accessToken" in data) {
+        localStorage.setItem("accessToken", data.accessToken);
         setIsAuthorized(true);
-        navigate('/users');
+        navigate("/users");
       } else {
-        setError(
-          (data as { message?: string }).message || 'Login failed'
-        );
+        setError((data as { message?: string }).message || "Login failed");
       }
     } catch (err) {
-      setError('An error occurred during login.');
+      setError("An error occurred during login.");
     }
   };
-  
+
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100 w-full">
       <form
@@ -92,7 +87,7 @@ const Login = () => {
             Sign In
           </button>
           <Link
-            to={ { pathname: '/register' }}
+            to={{ pathname: "/register" }}
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
           >
             Need an account?
@@ -103,4 +98,5 @@ const Login = () => {
   );
 };
 
+// noinspection JSUnusedGlobalSymbols
 export default Login;

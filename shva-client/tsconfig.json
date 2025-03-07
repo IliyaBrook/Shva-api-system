@@ -1,8 +1,8 @@
 {
   "include": [
     "**/*",
-//    "**/.server/**/*",
-//    "**/.client/**/*",
+    //    "**/.server/**/*",
+    //    "**/.client/**/*",
     ".react-router/types/**/*"
   ],
   "compilerOptions": {
@@ -22,9 +22,7 @@
       "@/pages/*": ["app/pages/*"],
       "@/contexts/*": ["app/contexts/*"],
       "@/components/*": ["app/components/*"],
-      "@/*": [
-        "app/*"
-      ]
+      "@/*": ["app/*"]
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,

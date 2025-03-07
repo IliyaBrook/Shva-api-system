@@ -1,20 +1,21 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import tseslint from 'typescript-eslint'
+import js from "@eslint/js";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
-import eslintGlobalRules from 'configs/eslint-global-rules.js'
+import eslintGlobalRules from "configs/eslint-global-rules.js";
 
+// noinspection JSUnusedGlobalSymbols
 export default tseslint.config(
-  { ignores: ['dist', '.idea', '.vscode', 'build'] },
+  { ignores: ["dist", ".idea", ".vscode", "build"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
+    files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.node,
     },
     rules: {
-      ...eslintGlobalRules
+      ...eslintGlobalRules,
     },
   },
-)
+);
