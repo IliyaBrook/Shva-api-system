@@ -4,14 +4,14 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { globalContext } from "@/contexts/globalContext";
 
-const Login = () => {
+const Login = (): React.JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { setIsAuthorized } = useContext(globalContext);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setError("");
 
@@ -33,7 +33,7 @@ const Login = () => {
       } else {
         setError((data as { message?: string }).message || "Login failed");
       }
-    } catch (err) {
+    } catch {
       setError("An error occurred during login.");
     }
   };

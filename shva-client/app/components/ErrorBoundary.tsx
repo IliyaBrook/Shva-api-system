@@ -3,7 +3,9 @@ import React from "react";
 import { isRouteErrorResponse } from "react-router";
 import { useNavigate } from "react-router-dom";
 
-export const ErrorBoundary = ({ error }: Route.ErrorBoundaryProps) => {
+export const ErrorBoundary = ({
+  error,
+}: Route.ErrorBoundaryProps): React.JSX.Element => {
   const navigate = useNavigate();
   let message = "Oops!";
   let details = "An unexpected error occurred.";

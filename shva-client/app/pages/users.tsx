@@ -2,7 +2,7 @@ import { globalContext } from "@/contexts/globalContext";
 import type { IUserResponse } from "@/types";
 import React, { useContext } from "react";
 
-const Users = () => {
+const Users = (): React.JSX.Element => {
   const { users, isAuthorized } = useContext(globalContext);
 
   if (!isAuthorized) {

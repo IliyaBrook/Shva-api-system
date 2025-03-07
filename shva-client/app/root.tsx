@@ -12,7 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 export { Layout };
 
-export default function App() {
+const App: React.FC = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,6 +43,8 @@ export default function App() {
       <Outlet />
     </globalContext.Provider>
   );
-}
+};
+
+export default App;
 
 export { ErrorBoundary };

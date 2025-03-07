@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { globalContext } from "@/contexts/globalContext";
 import { type IAuthResponse } from "@/types";
 
-const Register = () => {
+const Register = (): React.JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstname, setFirstname] = useState("");
@@ -13,7 +13,7 @@ const Register = () => {
   const navigate = useNavigate();
   const { setIsAuthorized } = useContext(globalContext);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setError("");
 
@@ -37,7 +37,7 @@ const Register = () => {
           (data as { message?: string }).message || "Registration failed",
         );
       }
-    } catch (err) {
+    } catch {
       setError("An error occurred during registration.");
     }
   };
