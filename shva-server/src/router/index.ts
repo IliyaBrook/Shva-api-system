@@ -38,6 +38,16 @@ const router: Router = Router();
  *     responses:
  *       200:
  *         description: Successful registration, returns access and refresh tokens and user information.
+ *         headers:
+ *           Set-Cookie:
+ *             schema:
+ *               type: string
+ *             description: |
+ *               Sets the `refreshToken` cookie for user session management.
+ *               - `HttpOnly`: true (cannot be accessed by client-side JavaScript)
+ *               - `Path`: / (cookie valid for the entire domain)
+ *               - `Max-Age`: 2592000 seconds (30 days)
+ *               - `Expires`: Sunday, April 6, 2025 22:19:42 GMT (example expiration date)
  *         content:
  *           application/json:
  *             schema:
@@ -114,6 +124,16 @@ router.post(
  *     responses:
  *       200:
  *         description: Successful login, returns access and refresh tokens and user information.
+ *         headers:
+ *           Set-Cookie:
+ *             schema:
+ *               type: string
+ *             description: |
+ *               Sets the `refreshToken` cookie for user session management.
+ *               - `HttpOnly`: true (cannot be accessed by client-side JavaScript)
+ *               - `Path`: / (cookie valid for the entire domain)
+ *               - `Max-Age`: 2592000 seconds (30 days)
+ *               - `Expires`: Sunday, April 6, 2025 22:20:16 GMT (example expiration date)
  *         content:
  *           application/json:
  *             schema:
@@ -203,7 +223,7 @@ router.post("/logout", userController.logout);
 /**
  * @openapi
  * /api/refresh:
- *     post:
+ *   post:
  *     summary: Refresh the access token using the refresh token
  *     tags: [Authentication]
  *     security:
@@ -211,6 +231,16 @@ router.post("/logout", userController.logout);
  *     responses:
  *       200:
  *         description: Successful token refresh, returns new access and refresh tokens.
+ *         headers:
+ *           Set-Cookie:
+ *             schema:
+ *               type: string
+ *             description: |
+ *               Sets a new `refreshToken` cookie to maintain user session.
+ *               - `HttpOnly`: true (cannot be accessed by client-side JavaScript)
+ *               - `Path`: / (cookie valid for the entire domain)
+ *               - `Max-Age`: 2592000 seconds (30 days)
+ *               - `Expires`: Sunday, April 6, 2025 22:22:55 GMT (example expiration date)
  *         content:
  *           application/json:
  *             schema:
@@ -233,7 +263,8 @@ router.post("/logout", userController.logout);
  *                   type: string
  *                   description: Error message.
  */
-router.get("/refresh", userController.refresh);
+router.post("/refresh", userController.refresh);
+
 /**
  * @openapi
  * /api/users:
