@@ -15,7 +15,6 @@ const useAuthAndGetUsers = ({
   setUsers,
   setIsLoading,
 }: UseAuthAndGetUsersProps): void => {
-  // To prevent an infinite loop in case the server doesn't validate a correct accessToken after a /refresh request, recursion is limited to 5 attempts.
   const checkAuthAndGetTries = useRef(0);
 
   useEffect(() => {
@@ -25,7 +24,6 @@ const useAuthAndGetUsers = ({
       checkAuthAndGetTries.current++;
       if (checkAuthAndGetTries.current >= 5) {
         localStorage.removeItem("accessToken");
-        setIsLoading(false);
         return;
       }
       try {
@@ -35,14 +33,11 @@ const useAuthAndGetUsers = ({
         });
         if (res.ok) {
           const usersData: IUsersResponse = await res.json();
-          console.log("[useAuthAndGetUsers] users result");
-
           if (Array.isArray(usersData)) {
             setUsers(usersData);
-            setIsAuthorized(true);
-          } else {
-            setIsAuthorized(true);
           }
+          setIsAuthorized(true);
+          checkAuthAndGetTries.current = 0;
           return;
         } else if (res.status === 401) {
           try {
