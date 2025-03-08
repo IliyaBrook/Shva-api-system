@@ -1,4 +1,9 @@
+/* tailwind.css */
 @import "tailwindcss";
+
+@tailwind components;
+@tailwind utilities;
+
 
 @layer components {
 	.th {
