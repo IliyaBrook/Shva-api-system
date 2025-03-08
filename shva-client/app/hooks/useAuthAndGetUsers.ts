@@ -77,7 +77,7 @@ const useAuthAndGetUsers = ({
     };
 
     void checkAuthAndGetData();
-  }, [isAuthorized]);
+  }, [isAuthorized, setIsAuthorized, setUsers, setIsLoading]);
 };
 
 export default useAuthAndGetUsers;
