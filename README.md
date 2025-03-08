@@ -31,7 +31,7 @@ Shva-api-system is an API system designed for user authentication and management
     
     This command will launch the server application on the port specified in the `.env` file (or port 5000 by default if the `PORT` environment variable is not set), client side launch on port 3000.
 
-## Installation and running in dev mode
+## Installation and running in production mode
 
 1. **Build for Production:**    Before running in production, you need to build both the client and server applications. Execute the following command in the root directory:   
 
