@@ -34,6 +34,7 @@ Authorization: Bearer {{accessToken}}
 //@no-log
 GET {{api}}/refresh
 Content-Type: application/json
+Authorization: Bearer {{accessToken}}
 
 > {%
   client.global.set("accessToken", response.body.accessToken);
@@ -43,5 +44,6 @@ Content-Type: application/json
 //@no-log
 POST {{api}}/logout
 Content-Type: application/json
+Authorization: Bearer {{accessToken}}
 
 > {% client.global.clearAll(); %}

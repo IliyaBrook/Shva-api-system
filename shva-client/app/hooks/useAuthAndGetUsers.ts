@@ -28,53 +28,48 @@ const useAuthAndGetUsers = ({
         setIsLoading(false);
         return;
       }
-      if (token) {
-        try {
-          const res = await fetch(apiUrl + "/users", {
-            headers: { Authorization: `Bearer ${token}` },
-            credentials: "include",
-          });
-          if (res.ok) {
-            const usersData: IUsersResponse = await res.json();
-            if (Array.isArray(usersData)) {
-              setUsers(usersData);
-              setIsAuthorized(true);
-            } else {
-              setIsAuthorized(true);
-            }
-            return;
-          } else if (res.status === 401) {
-            try {
-              const refreshRes = await fetch(apiUrl + "/refresh", {
-                credentials: "include",
-              });
-              if (refreshRes.ok) {
-                const refreshData: IAuthResponse = await refreshRes.json();
-                if ("accessToken" in refreshData) {
-                  localStorage.setItem("accessToken", refreshData.accessToken);
-                  await checkAuthAndGetData();
-                  setIsAuthorized(true);
-                  return;
-                } else {
-                  setIsAuthorized(false);
-                }
+      try {
+        const res = await fetch(apiUrl + "/users", {
+          headers: { Authorization: `Bearer ${token}` },
+          credentials: "include",
+        });
+        if (res.ok) {
+          const usersData: IUsersResponse = await res.json();
+          if (Array.isArray(usersData)) {
+            setUsers(usersData);
+            setIsAuthorized(true);
+          } else {
+            setIsAuthorized(true);
+          }
+          return;
+        } else if (res.status === 401) {
+          try {
+            const refreshRes = await fetch(apiUrl + "/refresh", {
+              credentials: "include",
+            });
+            if (refreshRes.ok) {
+              const refreshData: IAuthResponse = await refreshRes.json();
+              if ("accessToken" in refreshData) {
+                localStorage.setItem("accessToken", refreshData.accessToken);
+                await checkAuthAndGetData();
+                setIsAuthorized(true);
+                return;
               } else {
                 setIsAuthorized(false);
               }
-            } catch {
+            } else {
               setIsAuthorized(false);
             }
-          } else {
+          } catch {
             setIsAuthorized(false);
           }
-        } catch (error) {
-          console.error("Error during authentication check:", error);
+        } else {
           setIsAuthorized(false);
-        } finally {
-          setIsLoading(false);
         }
-      } else {
+      } catch (error) {
+        console.error("Error during authentication check:", error);
         setIsAuthorized(false);
+      } finally {
         setIsLoading(false);
       }
     };

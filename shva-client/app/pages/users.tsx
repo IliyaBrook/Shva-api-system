@@ -1,12 +1,29 @@
 import Spinner from "@/components/Spinner";
 import { globalContext } from "@/contexts/globalContext";
 import type { IUserResponse } from "@/types";
+import { apiUrl } from "@/utils";
 import formatDate from "@/utils/formatDate";
 import React, { useContext } from "react";
 
 const Users = (): React.JSX.Element => {
-  const { users, isLoading, isAuthorized } = useContext(globalContext);
+  const { users, isLoading, isAuthorized, setIsAuthorized } =
+    useContext(globalContext);
   const loading = isLoading || !isAuthorized;
+
+  const handleLogout = () => {
+    const token = localStorage.getItem("accessToken");
+    fetch(apiUrl + "/logout", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      credentials: "include",
+    }).then((res) => {
+      if (res.status === 200) {
+        localStorage.removeItem("accessToken");
+        setIsAuthorized(false);
+      }
+    });
+  };
+
   return (
     <div className="not-prose overflow-auto bg-white outline outline-white/5 dark:bg-gray-950/50 w-full min-h-screen flex flex-col relative">
       <nav className="bg-gray-800">
@@ -18,6 +35,7 @@ const Users = (): React.JSX.Element => {
                   <button
                     className="bg-red-500 hover:bg-red-700 rounded px-3 py-2 text-sm font-medium text-white"
                     aria-current="page"
+                    onClick={handleLogout}
                   >
                     Logout
                   </button>
