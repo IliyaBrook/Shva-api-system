@@ -8,6 +8,7 @@ import type { IUserResponse } from "@/types";
 import React, { useEffect, useMemo, useState } from "react";
 import { Outlet } from "react-router";
 import "./index.css";
+import "./tailwind.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export { Layout };
