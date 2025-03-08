@@ -223,7 +223,7 @@ router.post("/logout", userController.logout);
 /**
  * @openapi
  * /api/refresh:
- *   post:
+ *   get:
  *     summary: Refresh the access token using the refresh token
  *     tags: [Authentication]
  *     security:
@@ -263,7 +263,7 @@ router.post("/logout", userController.logout);
  *                   type: string
  *                   description: Error message.
  */
-router.post("/refresh", userController.refresh);
+router.get("/refresh", userController.refresh);
 
 /**
  * @openapi

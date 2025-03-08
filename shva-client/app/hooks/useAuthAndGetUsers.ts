@@ -50,25 +50,21 @@ const useAuthAndGetUsers = ({
                   localStorage.setItem("accessToken", refreshData.accessToken);
                   await checkAuthAndGetData();
                   setIsAuthorized(true);
+                  return;
                 } else {
-                  localStorage.removeItem("accessToken");
                   setIsAuthorized(false);
                 }
               } else {
-                localStorage.removeItem("accessToken");
                 setIsAuthorized(false);
               }
             } catch {
-              localStorage.removeItem("accessToken");
               setIsAuthorized(false);
             }
           } else {
-            localStorage.removeItem("accessToken");
             setIsAuthorized(false);
           }
         } catch (error) {
           console.error("Error during authentication check:", error);
-          localStorage.removeItem("accessToken");
           setIsAuthorized(false);
         }
       } else {

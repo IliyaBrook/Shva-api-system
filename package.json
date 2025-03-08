@@ -10,6 +10,8 @@
     "node": ">=22.0.0 <23.0.0"
   },
   "scripts": {
+    "start:client": "cross-env PORT=8080 yarn --cwd shva-client start",
+    "start:production": "cross-env yarn --cwd shva-server start",
     "build": "yarn build:server && yarn build:client",
     "build:server": "yarn --cwd shva-server build",
     "build:client": "yarn --cwd shva-client build",
@@ -27,6 +29,9 @@
     "shva-client",
     "shva-server"
   ],
+  "dependencies": {
+    "cross-env": "^7.0.3"
+  },
   "devDependencies": {
     "concurrently": "^9.1.2"
   }

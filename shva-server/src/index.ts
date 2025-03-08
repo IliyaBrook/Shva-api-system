@@ -3,12 +3,16 @@ import errorMiddleware from "@/middlewares/error-middleware";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import * as process from "node:process";
+import path from "path";
 import router from "./router/index";
 import { sequelize } from "./database/db";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./swagger";
 
-const PORT: number = Number(process.env.PORT) || 5000;
+const isProd = process.env.NODE_ENV === "production";
+const PORT: number =
+  Number(isProd ? process.env.PROD_PORT : process.env.PORT) || 5000;
 const app: express.Application = express();
 
 app.use(express.json());
@@ -25,6 +29,18 @@ app.use(
 app.use("/api", router);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(errorMiddleware);
+
+// Serve static files from the React client app (SPA build) ONLY in production
+if (process.env.NODE_ENV === "production") {
+  const clientBuildPath = path.join(
+    __dirname,
+    "../../shva-client/build/client",
+  );
+  app.use(express.static(clientBuildPath));
+  app.get("*", (_req, res) => {
+    res.sendFile(path.join(clientBuildPath, "index.html"));
+  });
+}
 
 const start = async (): Promise<void> => {
   try {

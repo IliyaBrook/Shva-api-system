@@ -8,7 +8,11 @@ import { validationResult } from "express-validator";
 const days30InSec = 30 * 24 * 60 * 60 * 1000;
 
 class UserController {
-  async registration(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async registration(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
     try {
       const body = req.body as IUserWithPass;
       const errors = validationResult(req);
@@ -57,7 +61,11 @@ class UserController {
     }
   }
 
-  async refresh(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async refresh(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
     try {
       const { refreshToken } = req.cookies;
       const userData = await userService.refresh(refreshToken);
@@ -71,7 +79,11 @@ class UserController {
     }
   }
 
-  async getUsers(_req: Request, res: Response, next: NextFunction): Promise<void> {
+  async getUsers(
+    _req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> {
     try {
       const users = await userService.getAllUsers();
       if (users.length > 0) {
