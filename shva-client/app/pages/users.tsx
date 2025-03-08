@@ -45,7 +45,7 @@ const Users = (): React.JSX.Element => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !loading) {
-          fetchNextPage();
+          void fetchNextPage();
         }
       },
       { threshold: 1 },
@@ -119,11 +119,15 @@ const Users = (): React.JSX.Element => {
           {hasMore && <div ref={loaderRef} />}
         </div>
       ) : (
-        <div className="flex flex-1 justify-center items-center">
-          <p className="text-xl font-semibold text-gray-700 dark:text-white p-4">
-            No users found.
-          </p>
-        </div>
+        <>
+          {!loading && (
+            <div className="flex flex-1 justify-center items-center">
+              <p className="text-xl font-semibold text-gray-700 dark:text-white p-4">
+                No users found.
+              </p>
+            </div>
+          )}
+        </>
       )}
       {isLoading && (
         <Spinner
