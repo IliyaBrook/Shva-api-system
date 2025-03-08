@@ -1,3 +1,4 @@
+import Spinner from "@/components/Spinner";
 import type { IAuthResponse } from "@/types";
 import { apiUrl } from "@/utils";
 import React, { useContext, useState } from "react";
@@ -9,12 +10,13 @@ const Login = (): React.JSX.Element => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { setIsAuthorized } = useContext(globalContext);
+  const { setIsAuthorized, setIsLoading, isLoading } =
+    useContext(globalContext);
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setError("");
-
+    setIsLoading(true);
     try {
       const response = await fetch(apiUrl + "/login", {
         method: "POST",
@@ -35,8 +37,20 @@ const Login = (): React.JSX.Element => {
       }
     } catch {
       setError("An error occurred during login.");
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if (isLoading)
+    return (
+      <Spinner
+        wrapperProps={{
+          className:
+            "absolute flex flex-1 justify-center items-center h-full w-full",
+        }}
+      />
+    );
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100 w-full">

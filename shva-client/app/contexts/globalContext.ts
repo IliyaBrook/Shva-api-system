@@ -6,4 +6,6 @@ export const globalContext = createContext<IGlobalContext>({
   setIsAuthorized: () => {},
   users: [],
   setUsers: () => {},
+  isLoading: false,
+  setIsLoading: () => {},
 });

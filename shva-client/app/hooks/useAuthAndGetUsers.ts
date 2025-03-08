@@ -6,12 +6,14 @@ interface UseAuthAndGetUsersProps {
   isAuthorized: boolean;
   setIsAuthorized: React.Dispatch<React.SetStateAction<boolean>>;
   setUsers: React.Dispatch<React.SetStateAction<IUserResponse[] | []>>;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const useAuthAndGetUsers = ({
   isAuthorized,
   setIsAuthorized,
   setUsers,
+  setIsLoading,
 }: UseAuthAndGetUsersProps): void => {
   // To prevent an infinite loop in case the server doesn't validate a correct accessToken after a /refresh request, recursion is limited to 5 attempts.
   const checkAuthAndGetTries = useRef(0);
@@ -19,9 +21,11 @@ const useAuthAndGetUsers = ({
   useEffect(() => {
     const checkAuthAndGetData = async (): Promise<void> => {
       const token = localStorage.getItem("accessToken");
+      setIsLoading(true);
       checkAuthAndGetTries.current++;
       if (checkAuthAndGetTries.current >= 5) {
         localStorage.removeItem("accessToken");
+        setIsLoading(false);
         return;
       }
       if (token) {
@@ -66,9 +70,12 @@ const useAuthAndGetUsers = ({
         } catch (error) {
           console.error("Error during authentication check:", error);
           setIsAuthorized(false);
+        } finally {
+          setIsLoading(false);
         }
       } else {
         setIsAuthorized(false);
+        setIsLoading(false);
       }
     };
 

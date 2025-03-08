@@ -11,12 +11,12 @@ const Register = (): React.JSX.Element => {
   const [lastname, setLastname] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { setIsAuthorized } = useContext(globalContext);
+  const { setIsAuthorized, setIsLoading } = useContext(globalContext);
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setError("");
-
+    setIsLoading(true);
     try {
       const response = await fetch(apiUrl + "/register", {
         method: "POST",
@@ -39,6 +39,8 @@ const Register = (): React.JSX.Element => {
       }
     } catch {
       setError("An error occurred during registration.");
+    } finally {
+      setIsLoading(false);
     }
   };
 

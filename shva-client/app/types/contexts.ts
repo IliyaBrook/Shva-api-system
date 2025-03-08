@@ -5,4 +5,6 @@ export interface IGlobalContext {
   setIsAuthorized: (isAuthorized: boolean) => void;
   users: IUserResponse[] | [];
   setUsers: (newState: IUserResponse[] | []) => void;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
 }
