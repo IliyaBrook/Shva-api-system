@@ -84,8 +84,13 @@ class UserService {
     };
   }
 
-  async getAllUsers(): Promise<User[]> {
-    return await User.findAll();
+  async getAllUsers(page: number, limit: number): Promise<User[]> {
+    const offset = (page - 1) * limit;
+    return await User.findAll({
+      offset,
+      limit,
+      order: [["id", "ASC"]],
+    });
   }
 }
 

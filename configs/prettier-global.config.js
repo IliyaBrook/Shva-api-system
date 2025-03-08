@@ -6,7 +6,7 @@ const config= {
   semi: false,
   singleQuote: true,
   trailingComma: 'all',
-  printWidth: 100,
+  printWidth: 130,
   tabWidth: 2,
   useTabs: false,
   plugins: ['@trivago/prettier-plugin-sort-imports'],

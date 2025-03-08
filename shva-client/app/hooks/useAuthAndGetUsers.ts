@@ -35,6 +35,8 @@ const useAuthAndGetUsers = ({
         });
         if (res.ok) {
           const usersData: IUsersResponse = await res.json();
+          console.log("[useAuthAndGetUsers] users result");
+
           if (Array.isArray(usersData)) {
             setUsers(usersData);
             setIsAuthorized(true);

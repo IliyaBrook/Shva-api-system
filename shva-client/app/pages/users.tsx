@@ -3,15 +3,60 @@ import { globalContext } from "@/contexts/globalContext";
 import type { IUserResponse } from "@/types";
 import { apiUrl } from "@/utils";
 import formatDate from "@/utils/formatDate";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
 const Users = (): React.JSX.Element => {
-  const { users, isLoading, isAuthorized, setIsAuthorized } =
-    useContext(globalContext);
+  const {
+    users,
+    isLoading,
+    isAuthorized,
+    setIsAuthorized,
+    setIsLoading,
+    setUsers,
+  } = useContext(globalContext);
+  const [page, setPage] = useState<number>(2);
+  const [hasMore, setHasMore] = useState(true);
+  const loaderRef = useRef<HTMLDivElement>(null);
   const loading = isLoading || !isAuthorized;
+  const token = localStorage.getItem("accessToken");
+
+  const fetchNextPage = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${apiUrl}/users?page=${page}&limit=10`, {
+        headers: { Authorization: `Bearer ${token}` },
+        credentials: "include",
+      });
+      const data: IUserResponse[] = await res.json();
+      if (data.length < 10) {
+        setHasMore(false);
+      }
+      setUsers([...users, ...data]);
+      setPage(page + 1);
+    } catch (error) {
+      console.error("Error loading users", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!hasMore) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loading) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 1 },
+    );
+    if (loaderRef.current) observer.observe(loaderRef.current);
+    return () => {
+      if (loaderRef.current) observer.unobserve(loaderRef.current);
+    };
+  }, [hasMore, loading, page, users]);
 
   const handleLogout = () => {
-    const token = localStorage.getItem("accessToken");
     fetch(apiUrl + "/logout", {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
@@ -80,6 +125,7 @@ const Users = (): React.JSX.Element => {
                   ))}
                 </tbody>
               </table>
+              {hasMore && <div ref={loaderRef} />}
             </div>
           ) : (
             <div className="flex flex-1 justify-center items-center">

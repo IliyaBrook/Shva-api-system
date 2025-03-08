@@ -80,18 +80,17 @@ class UserController {
   }
 
   async getUsers(
-    _req: Request,
+    req: Request,
     res: Response,
     next: NextFunction,
   ): Promise<void> {
     try {
-      const users = await userService.getAllUsers();
-      if (users.length > 0) {
-        const usersData = users.map((user) => new UserDto(user));
-        res.json(usersData);
-      } else {
-        res.json([]);
-      }
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 10;
+
+      const users = await userService.getAllUsers(page, limit);
+      const usersData = users.map((user) => new UserDto(user));
+      res.json(usersData);
     } catch (e) {
       next(e);
     }
