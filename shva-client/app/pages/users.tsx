@@ -70,7 +70,7 @@ const Users = (): React.JSX.Element => {
   };
 
   return (
-    <div className="not-prose overflow-auto bg-white outline outline-white/5 dark:bg-gray-950/50 w-full min-h-screen flex flex-col relative">
+    <div className="not-prose overflow-auto bg-white outline outline-white/5 dark:bg-gray-950/50 w-full min-h-screen flex flex-col">
       <nav className="bg-gray-800">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
@@ -90,51 +90,47 @@ const Users = (): React.JSX.Element => {
           </div>
         </div>
       </nav>
-      {loading ? (
+      {users.length > 0 ? (
+        <div className="m-8 overflow-hidden">
+          <table className="w-full table-auto border-collapse text-sm">
+            <thead>
+              <tr>
+                <th className="th">ID</th>
+                <th className="th">Email</th>
+                <th className="th">First Name</th>
+                <th className="th">Last Name</th>
+                <th className="th">Created At</th>
+                <th className="th">Updated At</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white dark:bg-gray-800">
+              {users.map((user: IUserResponse) => (
+                <tr key={user.id}>
+                  <td className="td">{user.id}</td>
+                  <td className="td">{user.email}</td>
+                  <td className="td">{user.firstname}</td>
+                  <td className="td">{user.lastname}</td>
+                  <td className="td">{formatDate(user.createdAt)}</td>
+                  <td className="td">{formatDate(user.updatedAt)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {hasMore && <div ref={loaderRef} />}
+        </div>
+      ) : (
+        <div className="flex flex-1 justify-center items-center">
+          <p className="text-xl font-semibold text-gray-700 dark:text-white p-4">
+            No users found.
+          </p>
+        </div>
+      )}
+      {isLoading && (
         <Spinner
           wrapperProps={{
-            className:
-              "absolute flex flex-1 justify-center items-center h-full w-full",
+            className: "fixed inset-0 flex justify-center items-center",
           }}
         />
-      ) : (
-        <>
-          {users.length > 0 ? (
-            <div className="m-8 overflow-hidden">
-              <table className="w-full table-auto border-collapse text-sm">
-                <thead>
-                  <tr>
-                    <th className="th">ID</th>
-                    <th className="th">Email</th>
-                    <th className="th">First Name</th>
-                    <th className="th">Last Name</th>
-                    <th className="th">Created At</th>
-                    <th className="th">Updated At</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white dark:bg-gray-800">
-                  {users.map((user: IUserResponse) => (
-                    <tr key={user.id}>
-                      <td className="td">{user.id}</td>
-                      <td className="td">{user.email}</td>
-                      <td className="td">{user.firstname}</td>
-                      <td className="td">{user.lastname}</td>
-                      <td className="td">{formatDate(user.createdAt)}</td>
-                      <td className="td">{formatDate(user.updatedAt)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {hasMore && <div ref={loaderRef} />}
-            </div>
-          ) : (
-            <div className="flex flex-1 justify-center items-center">
-              <p className="text-xl font-semibold text-gray-700 dark:text-white p-4">
-                No users found.
-              </p>
-            </div>
-          )}
-        </>
       )}
     </div>
   );
