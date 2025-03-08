@@ -31,6 +31,26 @@ Shva-api-system is an API system designed for user authentication and management
     
     This command will launch the server application on the port specified in the `.env` file (or port 5000 by default if the `PORT` environment variable is not set), client side launch on port 3000.
 
+## Installation and running in dev mode
+
+1. **Build for Production:**    Before running in production, you need to build both the client and server applications. Execute the following command in the root directory:   
+
+   ```sh
+   yarn build
+   ```
+
+    This command compiles the TypeScript server code and builds the client-side React application into static files. 
+
+2. **Run the project in production mode:**    To start the server in production mode, which will also serve the static client files, run the command:
+
+   ```sh
+   yarn start:prod
+   ```
+
+   This command launches the server application in production environment. By default, the application will be running on 
+
+   **port 80**
+
 ## API Server Testing
 
 Several methods are available for testing the API server:
